@@ -1,6 +1,6 @@
 server:
-  port: 8181
+  port: 8282
 
 jwt:
-  secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqaDk1MDkyNUBuYXZlci5jb20iLCJwYXNzd29yZCI6InNzIn0.O_hGaWP686Qyu6NyMTA3JfYpsVnD2Khb1khvnglom2I
+  secret: '시큐리티코드'
 
