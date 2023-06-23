@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -21,8 +22,9 @@ public class UserController {
     private final UserService userService;
 
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<JwtToken> UserLogin(@RequestBody Map<String, String> loginForm) {
+        log.info("loginForm========================");
         JwtToken token = userService.login(loginForm.get("username"), loginForm.get("password"));
         return ResponseEntity.ok(token);
     }

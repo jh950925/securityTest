@@ -31,29 +31,32 @@ public class JwtTokenProvider {
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] secretByteKey = DatatypeConverter.parseBase64Binary(secretKey);
         this.key = Keys.hmacShaKeyFor(secretByteKey);
+        log.info("key : " + key );
     }
 
     public JwtToken generateToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-
+        log.info("authorities : " + authorities);
         //Access Token 생성
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
-                .signWith(SignatureAlgorithm.HS256, key)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+        log.info("accessToken : " + accessToken);
 
         //Refresh Token 생성
         String refreshToken = Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
-                .signWith(SignatureAlgorithm.HS256, key)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+        log.info("refreshToken : " + refreshToken);
 
         return JwtToken.builder()
-                .grantType("bearer")
+                .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -88,16 +91,13 @@ public class JwtTokenProvider {
             return false;
         } catch (NullPointerException exception) {
             log.error("Token is null");
-            return false;
         }
+        return false;
     }
 
     private Claims parseClaims(String accessToken) {
         try{
-            return Jwts.parser()
-                    .setSigningKey(key)
-                    .parseClaimsJws(accessToken)
-                    .getBody();
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
         }catch(ExpiredJwtException e){
             return e.getClaims();
         }

@@ -1,6 +1,6 @@
 server:
-  port: 8282
+  port: 8181
 
 jwt:
-  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQ=
+  secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqaDk1MDkyNUBuYXZlci5jb20iLCJwYXNzd29yZCI6InNzIn0.O_hGaWP686Qyu6NyMTA3JfYpsVnD2Khb1khvnglom2I
 
